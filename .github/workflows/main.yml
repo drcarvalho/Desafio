@@ -1,4 +1,4 @@
-name: CI
+name: Build and Push Docker Image
 
 on:
   push:
@@ -6,13 +6,20 @@ on:
       - main
 
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
-    
-    steps:
-    - name: Checkout repo
-      uses: actions/checkout@v2
 
-    - name: Build and Deploy
-      run: |
-        docker-compose up -d --build
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.DOCKER_USERNAME }}/desafio-globo:${{ github.sha }} .
+          docker push ${{ secrets.DOCKER_USERNAME }}/desafio-globo:${{ github.sha }}
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
