@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-desafio-globo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: desafio-globo
+  template:
+    metadata:
+      labels:
+        app: desafio-globo
+    spec:
+      containers:
+      - name: container-desafio-globo
+        image: drcarvalho/desafio-globo:latest
+        ports:
+        - containerPort: 8000
