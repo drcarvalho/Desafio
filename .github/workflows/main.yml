@@ -1,25 +1,44 @@
+# Define o nome do fluxo de trabalho e os eventos que o acionam
 name: Build and Push Docker Image
-
 on:
   push:
     branches:
       - master
 
+# Define os jobs a serem executados
 jobs:
   build-and-push:
+    # Define o ambiente de execução do job
     runs-on: ubuntu-latest
 
+    # Define os passos a serem executados dentro do job
     steps:
+      # Passo 1: Checkout do repositório
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      # Passo 2: Configuração do Docker Buildx
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
-      - name: Build Docker Image
+      # Passo 3: Construção e Envio da Imagem Docker
+      - name: Build and Push Docker Image
+        # Define o script a ser executado
         run: |
-          docker build -t ${{ secrets.DOCKER_USERNAME }}/desafio-globo:${{ github.sha }} .
-          docker push ${{ secrets.DOCKER_USERNAME }}/desafio-globo:${{ github.sha }}
+          # Define variáveis para o nome da imagem e a tag
+          IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/desafio-globo"
+          IMAGE_TAG="${{ github.sha }}"
+
+          # Constrói a imagem Docker
+          docker build -t $IMAGE_NAME:$IMAGE_TAG .
+
+          # Loga no Docker Hub
+          echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+
+          # Envia a imagem Docker para o Docker Hub
+          docker push $IMAGE_NAME:$IMAGE_TAG
+
+        # Define as variáveis de ambiente para o script
         env:
           DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
