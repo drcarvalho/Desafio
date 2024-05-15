@@ -17,7 +17,7 @@ jobs:
 
       - name: Install Docker and Minikube on EC2
         run: |
-          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ubuntu@${{ secrets.EC2_INSTANCE_IP }} 'bash -s' << 'ENDSSH'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_KEY_PATH }} ubuntu@${{ secrets.EC2_INSTANCE_IP }} 'bash -s' << 'ENDSSH'
             sudo apt-get update
             sudo apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release
             curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
