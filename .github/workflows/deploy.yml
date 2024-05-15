@@ -3,7 +3,7 @@ name: Deploy Kubernetes Manifest
 on:
   push:
     branches:
-      - main
+      - infra
 
 jobs:
   deploy:
