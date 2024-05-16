@@ -7,7 +7,7 @@ on:
 
 env:
   ECR_REPOSITORY: api-app
-  EKS_CLUSTER_NAME: challenge-cluster
+  EKS_CLUSTER_NAME: cluster-desafio-globo
   AWS_REGION: us-east-1
 
 jobs:
