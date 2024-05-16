@@ -12,4 +12,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY app/api.py .
 
 # Comandos para iniciar o server
-CMD ["gunicorn", "--log-level", "debug", "--bind", "0.0.0.0:8000", "api:app"]
+CMD ["gunicorn", "--log-level", "debug", "--bind", "0.0.0.0:80", "api:app"]
