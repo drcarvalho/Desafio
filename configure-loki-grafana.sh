@@ -16,7 +16,7 @@ helm repo update
 # Cria o namespace "loki"
 kubectl create namespace loki-stack
 
-# Configura o values file para o Loki Stack
+# Cria um arquivo yaml para configurar o loki
 cat <<EOF > loki-stack-values.yaml
 loki:
   enabled: true
@@ -33,7 +33,7 @@ EOF
 # Instala o Loki Stack com o Helm
 helm upgrade --install loki --namespace=loki-stack grafana/loki-stack --values loki-stack-values.yaml --create-namespace
 
-# Configura o values file para o Grafana-Agent
+# Cria um arquivo yaml para configurar o grafana
 cat <<EOF > grafana-agent-values.yaml
 agent:
   mode: 'flow'
@@ -60,8 +60,8 @@ EOF
 # Instala o Grafana-Agent com o Helm
 helm upgrade --install grafana-agent --namespace=loki-stack grafana/grafana-agent --values grafana-agent-values.yaml
 
-# Encaminha a porta do serviço Grafana UI para o localhost
+# Direciona porta do serviço Grafana UI para o localhost
 kubectl port-forward svc/loki-grafana 3000:80 -n loki-stack &
 
-# Exibe a senha do admin do Grafana
+# Exibe a senha do admin do Grafana (importante salvar)
 kubectl get secret loki-grafana -n loki-stack -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
