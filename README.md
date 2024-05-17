@@ -35,3 +35,5 @@ Sistema de monitoramento, fácil de integrar com o Grafana.
 Plataforma para monitoramento e visualização, Dashboards interativos e personalizáveis.
 - Loki: 
 Sistema de logs, integração facil com Prometheus e Grafana.
+
+![image](https://github.com/drcarvalho/Desafio/assets/60482737/914a3375-22c1-4efe-b8f0-0270994727dc)
