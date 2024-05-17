@@ -3,7 +3,7 @@ name: Main Workflow
 on:
   push:
     branches:
-      - master
+      - infra-local
 
 # Define os jobs a serem executados
 jobs:
